@@ -304,15 +304,43 @@
         @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
         .toast {
             position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(120px);
-            background: #22c55e; color: white; padding: 1rem 2rem;
-            border-radius: 12px; font-weight: 600; font-size: 0.95rem;
-            z-index: 2000; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 30px rgba(34, 197, 94, 0.3);
+            background: rgba(15, 15, 20, 0.85);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            color: white; padding: 1rem 1.5rem;
+            border-radius: 16px; font-weight: 500; font-size: 0.95rem;
+            z-index: 2000; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255,255,255,0.08);
             display: flex; align-items: center; gap: 0.75rem;
-            max-width: calc(100% - 2rem);
+            max-width: calc(100% - 2rem); opacity: 0;
         }
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        [data-theme="light"] .toast {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a1a2e;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0,0,0,0.06);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toast svg { flex-shrink: 0; }
+        .toast .toast-icon {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .toast .toast-icon svg { stroke: white; }
+        .toast .toast-bar {
+            position: absolute; bottom: 0; left: 16px; right: 16px; height: 3px;
+            border-radius: 3px; background: rgba(147, 113, 209, 0.3); overflow: hidden;
+        }
+        .toast .toast-bar::after {
+            content: ''; display: block; height: 100%;
+            background: linear-gradient(90deg, var(--light-purple), #22c55e);
+            border-radius: 3px; width: 100%;
+            animation: toast-progress 3.5s linear forwards;
+        }
+        @keyframes toast-progress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
         .flyer-viewer { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
         .flyer-viewer.show { display: block; opacity: 1; transform: translateY(0); }
         .gate-form.success { border-color: #22c55e; }
@@ -606,8 +634,9 @@
 </head>
 <body>
     <div class="toast" id="toast">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span class="toast-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
         <span id="toastMsg">Accès accordé !</span>
+        <div class="toast-bar"></div>
     </div>
     <nav>
         <div class="nav-container">
