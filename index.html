@@ -41,7 +41,7 @@
             --footer-bg: #0a0a0a;
         }
 
-        html { scroll-behavior: smooth; overflow-x: hidden; }
+        html { scroll-behavior: smooth; overflow-x: hidden; background: #050505; }
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--bg-primary);
@@ -530,8 +530,8 @@
         }
 
         /* ===== FOOTER ===== */
-        .footer-wrap { background: var(--footer-bg); margin-bottom: 0; }
-        html, body { min-height: 100%; }
+        .footer-wrap { background: var(--footer-bg); }
+        [data-theme="light"] { background: #0a0a0a; }
         footer {
             max-width: 1200px; margin: 0 auto;
             padding: 2.5rem 2rem; text-align: left;
